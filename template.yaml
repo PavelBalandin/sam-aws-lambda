@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: AWS Lambda Function
+Resources:
+  MyLambdaFunction:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      FunctionName: MyJavaLambdaFunction
+      Handler: org.example.MainHandler::handleRequest
+      Runtime: java17
+      CodeUri: ./build/libs/independent-aws-lambda.jar
+      MemorySize: 512
+      Timeout: 10
+      Policies:
+        - AWSLambdaBasicExecutionRole
+      FunctionUrlConfig:
+        AuthType: NONE
+
+Outputs:
+  MyFunctionUrlEndpoint:
+    Description: "My Lambda Function URL Endpoint"
+    Value:
+      Fn::GetAtt: MyLambdaFunctionUrl.FunctionUrl
